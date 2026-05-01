@@ -129,16 +129,16 @@ header h1 em {
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.45);
+  color: var(--white);
   text-decoration: none;
   display: flex;
   align-items: center;
   gap: 7px;
-  border-bottom: 1px solid rgba(255,255,255,0.12);
+  border-bottom: 1px solid rgba(255,255,255,0.4);
   padding-bottom: 2px;
   transition: color 0.2s, border-color 0.2s;
 }
-.header-links a:hover { color: var(--white); border-color: var(--white); }
+.header-links a:hover { color: var(--warm); border-color: var(--warm); }
 
 .header-links svg {
   width: 13px;
@@ -161,22 +161,24 @@ header h1 em {
 .photo-frame::before {
   content: '';
   position: absolute;
-  top: 12px; left: 12px;
-  right: -12px; bottom: -12px;
-  border: 1px solid var(--warm);
-  opacity: 0.3;
+  top: -6px; left: -6px;
+  right: -6px; bottom: -6px;
+  border-radius: 50%;
+  border: 2px solid var(--warm);
+  opacity: 0.4;
   z-index: 0;
 }
 
 .photo-frame img {
   width: 240px;
-  height: 290px;
+  height: 240px;
   object-fit: cover;
   object-position: center top;
   display: block;
   position: relative;
   z-index: 1;
   filter: grayscale(15%);
+  border-radius: 50%;
 }
 
 /* ── NAV ── */
@@ -335,8 +337,9 @@ nav a:hover { color: var(--ink); border-color: var(--warm); }
 /* pull quote */
 .cs-pullquote {
   border-left: 3px solid var(--warm);
-  padding: 16px 24px;
-  margin-bottom: 36px;
+  padding: 20px 28px;
+  margin-bottom: 0;
+  margin-top: 32px;
   background: var(--warm-lite);
 }
 
@@ -965,7 +968,7 @@ nav a:hover { color: var(--ink); border-color: var(--warm); }
   font-size: 48px;
   font-weight: 700;
   line-height: 0.85;
-  color: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.18);
   letter-spacing: -2px;
   flex-shrink: 0;
   user-select: none;
@@ -985,12 +988,13 @@ nav a:hover { color: var(--ink); border-color: var(--warm); }
   line-height: 1.2;
   margin-bottom: 8px;
   letter-spacing: -0.3px;
+  color: var(--white);
 }
 
 .toc-desc {
   font-size: 13px;
   line-height: 1.6;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.72);
   margin-bottom: 14px;
 }
 
@@ -1023,6 +1027,115 @@ nav a:hover { color: var(--ink); border-color: var(--warm); }
   .toc-inner { padding: 40px 20px; }
   .toc-grid { grid-template-columns: 1fr; }
   .toc-num { font-size: 36px; }
+}
+
+
+/* ── SCAN LAYER ── */
+.cs-scan {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 2px;
+  margin-bottom: 36px;
+}
+
+.cs-scan-item {
+  background: var(--warm-lite);
+  padding: 18px 20px;
+  border-top: 2px solid var(--warm);
+}
+
+.cs-scan-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--warm);
+  margin-bottom: 8px;
+}
+
+.cs-scan-text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.cs-scan-text strong {
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+  .cs-scan {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ── LIGHTBOX ── */
+.cs-header-image {
+  cursor: zoom-in;
+}
+
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  padding: 24px;
+}
+
+.lightbox-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.lightbox-overlay img {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+  cursor: zoom-out;
+  transform: scale(0.95);
+  transition: transform 0.3s ease;
+}
+
+.lightbox-overlay.active img {
+  transform: scale(1);
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  color: rgba(255,255,255,0.7);
+  font-size: 32px;
+  cursor: pointer;
+  line-height: 1;
+  font-family: var(--sans);
+  font-weight: 300;
+  transition: color 0.2s;
+  z-index: 1001;
+}
+
+.lightbox-close:hover { color: var(--warm); }
+
+.lightbox-hint {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
 }
 
 /* ── TOOLS STRIP ── */
@@ -1120,6 +1233,20 @@ footer {
   footer { padding: 28px 20px; }
 }
 </style>
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23111010'/><text y='72' x='8' font-size='62' font-family='Georgia,serif' fill='%23c8922a' font-weight='700'>LH</text></svg>">
+  <meta property="og:title" content="Luke Harper — Senior Product Manager">
+  <meta property="og:description" content="Case studies across B2B, B2C and C2C marketplaces — including lead management, applied AI, and 0→1 product launches.">
+  <meta property="og:url" content="https://luke-harper.com">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Luke Harper — Senior Product Manager">
+  <meta name="twitter:description" content="Case studies across B2B, B2C and C2C marketplaces — including lead management, applied AI, and 0→1 product launches.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23111010'/%3E%3Ctext y='72' x='8' font-size='62' font-family='Georgia,serif' fill='%23c8922a' font-weight='700'%3ELH%3C/text%3E%3C/svg%3E">
+  <meta property="og:title" content="Luke Harper — Senior Product Manager">
+  <meta property="og:description" content="Case studies across B2B, B2C and C2C marketplaces — including lead management, applied AI, and 0→1 product launches.">
+  <meta property="og:url" content="https://luke-harper.com">
+  <meta property="og:type" content="website">
 </head>
 <body>
 
@@ -1624,6 +1751,46 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.06 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+
+// Lightbox
+document.addEventListener('DOMContentLoaded', () => {
+  const overlay = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const closeBtn = document.getElementById('lightbox-close');
+
+  document.querySelectorAll('.cs-header-image').forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function closeLightbox() {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay || e.target === lightboxImg) closeLightbox();
+  });
+
+  closeBtn.addEventListener('click', closeLightbox);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+});
+
 </script>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox">
+  <span class="lightbox-close" id="lightbox-close">×</span>
+  <img id="lightbox-img" src="" alt="">
+  <p class="lightbox-hint">Click or press Esc to close</p>
+</div>
 </body>
 </html>
